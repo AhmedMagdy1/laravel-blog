@@ -28,3 +28,7 @@ Route::get('/admin/keyword-group/create', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('admin/posts')->group(function (){
+    Route::get('/', 'Blog\PostController@index');
+});
