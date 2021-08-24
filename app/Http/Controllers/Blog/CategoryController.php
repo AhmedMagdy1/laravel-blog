@@ -3,10 +3,17 @@
 namespace App\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
+use App\Service\Blog\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    private $categoryService;
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = $this->categoryService->getPaginated();
+        return view('admin.category.list.index', compact('categories'));
     }
 
     /**
@@ -39,17 +47,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -57,7 +54,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = $this->categoryService->get($id);
+        return view('admin.category.form.index', compact('category'));
     }
 
     /**
