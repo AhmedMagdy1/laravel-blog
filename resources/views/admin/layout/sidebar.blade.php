@@ -56,6 +56,14 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link " href="/admin/category">
+                    <i class="material-icons">view_module</i>
+                    <span>List Category</span>
+                </a>
+            </li>
+
+
+            <li class="nav-item">
                 <a class="nav-link " href="user-profile-lite.html">
                     <i class="material-icons">person</i>
                     <span>User Profile</span>

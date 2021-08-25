@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Blog;
 
+use App\Entity\Blog\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Blog\CreateCategory;
 use App\Service\Blog\CategoryService;
 use Illuminate\Http\Request;
 
@@ -14,70 +16,38 @@ class CategoryController extends Controller
         $this->categoryService = $categoryService;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $categories = $this->categoryService->getPaginated();
         return view('admin.category.list.index', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $category = new Category();
+        $categories = $this->categoryService->getLookups();
+        return view('admin.category.form.index', compact('category', 'categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(CreateCategory $request)
     {
-        //
+        $category = new Category($request);
+        $this->categoryService->store($category);
+        return redirect('/admin/category');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $category = $this->categoryService->get($id);
-        return view('admin.category.form.index', compact('category'));
+        $categoryEntity = new Category($category);
+        $categories = $this->categoryService->getLookups();
+        return view('admin.category.form.index', ['category' => $categoryEntity, 'categories' => $categories]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $categoryEntity = new Category($request);
+        $this->categoryService->update($categoryEntity, $id);
+        return redirect('/admin/category');
     }
 }

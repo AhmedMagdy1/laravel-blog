@@ -5,7 +5,10 @@
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
                 <span class="text-uppercase page-subtitle">Categories</span>
-                <h3 class="page-title">List Category</h3>
+                <h3 class="page-title">List Category </h3>
+            </div>
+            <div class="col-sm-8">
+
             </div>
         </div>
         <!-- End Page Header -->
@@ -13,12 +16,17 @@
         <div class="row">
             <div class="col">
                 <div class="card card-small mb-4">
+                    <div class="p-3" style="text-align: right;">
+                        <a href="/admin/category/create" class="btn btn-success"> <i class="fas fa-plus"></i>  Add Category</a>
+                    </div>
+
                     <div class="card-body p-0 pb-3 text-center">
                         <table class="table mb-0">
                             <thead class="bg-light">
                             <tr>
                                 <th scope="col" class="border-0">#</th>
                                 <th scope="col" class="border-0">Name</th>
+                                <th scope="col" class="border-0">Slug</th>
                                 <th scope="col" class="border-0">Slug</th>
                                 <th scope="col" class="border-0">Action</th>
                             </tr>
@@ -29,7 +37,8 @@
                                     <td>{{$category->id}}</td>
                                     <td>{{$category->name}}</td>
                                     <td>{{$category->slug}}</td>
-                                    <td><a href="/admin/category/update/{{$category->id}}"><i class="fas fa-edit"></i></a></td>
+                                    <td>{{($category->parentCategory->count()) ? $category->parentCategory[0]['name'] : ''}}</td>
+                                    <td><a href="/admin/category/{{$category->id}}/edit"><i class="fas fa-edit"></i></a></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -41,7 +50,7 @@
                 </div>
             </div>
         </div>
-        {{--    Page Content    --}}
+        {{--Page Content--}}
     </div>
 @endsection
 @section('style')

@@ -35,5 +35,7 @@ Route::prefix('admin/posts')->group(function (){
 Route::prefix('admin/category')->group(function (){
     Route::get('/', 'Blog\CategoryController@index');
     Route::get('/create', 'Blog\CategoryController@create');
-    Route::get('/update/{id}', 'Blog\CategoryController@edit');
+    Route::post('/create', 'Blog\CategoryController@store');
+    Route::get('/{id}/edit', 'Blog\CategoryController@edit');
+    Route::put('/{id}', 'Blog\CategoryController@update');
 });

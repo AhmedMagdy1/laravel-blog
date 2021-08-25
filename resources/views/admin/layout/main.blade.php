@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/admin-assets/styles/extras.1.1.0.min.css">
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.6/quill.snow.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/admin-assets/styles/public.css">
     @yield('style')
 </head>
@@ -57,6 +58,7 @@
 <script src="/admin-assets/scripts/shards-dashboards.1.1.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.6/quill.min.js"></script>
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="/admin-assets/scripts/app/app-blog-new-post.1.1.0.js"></script>
 @yield('script')
 </body>
