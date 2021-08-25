@@ -32,3 +32,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('admin/posts')->group(function (){
     Route::get('/', 'Blog\PostController@index');
 });
+Route::prefix('admin/category')->group(function (){
+    Route::get('/', 'Blog\CategoryController@index');
+    Route::get('/create', 'Blog\CategoryController@create');
+    Route::get('/update/{id}', 'Blog\CategoryController@edit');
+});

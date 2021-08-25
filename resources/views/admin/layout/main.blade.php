@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/admin-assets/styles/extras.1.1.0.min.css">
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.6/quill.snow.css">
+    <link rel="stylesheet" href="/admin-assets/styles/public.css">
     @yield('style')
 </head>
 <body class="h-100">
