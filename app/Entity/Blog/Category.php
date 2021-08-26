@@ -2,9 +2,11 @@
 
 namespace App\Entity\Blog;
 
-class Category
+use App\Entity\Entity;
+
+class Category extends Entity
 {
-    private $id, $name, $slug, $parent_id;
+    private $name, $slug, $parent_id;
 
     public function __construct($category = '')
     {
@@ -12,13 +14,6 @@ class Category
         $this->name = isset($category->name) ? $category->name : '';
         $this->slug = isset($category->slug) ? $category->slug : '';
         $this->parent_id = isset($category->parent_id) ? $category->parent_id : null;
-    }
-    /**
-     * @return null
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -44,12 +39,5 @@ class Category
     {
         return $this->parent_id;
     }
-    function toArray()
-    {
-        $result = [];
-        foreach ($this as $key => $value) {
-            $result[$key] =  $value;
-        }
-        return $result;
-    }
+
 }
