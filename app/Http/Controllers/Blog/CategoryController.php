@@ -44,6 +44,7 @@ class CategoryController extends Controller
         return view('admin.category.form.index', ['category' => $categoryEntity, 'categories' => $categories]);
     }
 
+    //todo validate update category
     public function update(Request $request, $id)
     {
         $categoryEntity = new Category($request);
