@@ -31,12 +31,12 @@ class CategoryService
     }
     function store(CategoryEntity $category)
     {
-        return Category::insert($category->toArray());
+        return Category::insert($category->toArray(['id']));
 
     }
     function update(CategoryEntity $category, $id)
     {
-        return Category::find($id)->update($category->toArray());
+        return Category::find($id)->update($category->toArray(['id']));
     }
 
 }
