@@ -15,6 +15,7 @@ class CreateKeywordGroupsTable extends Migration
     {
         Schema::create('keyword_groups', function (Blueprint $table) {
             $table->id();
+            $table->string('main_keyword');
             $table->bigInteger('assigned_to')->unsigned();
             $table->foreign('assigned_to')->references('id')->on('users');
             $table->bigInteger('created_by')->unsigned();
