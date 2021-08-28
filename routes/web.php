@@ -20,10 +20,6 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('admin.posts.post-form.create');
 });
-Route::get('/admin/keyword-group/create', function () {
-    return view('admin.keyword-groups.create.index');
-});
-
 
 Auth::routes();
 
@@ -32,10 +28,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('admin/posts')->group(function (){
     Route::get('/', 'Blog\PostController@index');
 });
+
 Route::prefix('admin/category')->group(function (){
     Route::get('/', 'Blog\CategoryController@index');
     Route::get('/create', 'Blog\CategoryController@create');
     Route::post('/create', 'Blog\CategoryController@store');
     Route::get('/{id}/edit', 'Blog\CategoryController@edit');
     Route::put('/{id}', 'Blog\CategoryController@update');
+});
+Route::prefix('/admin/keyword-group')->group(function (){
+    Route::get('/create', 'SEO\KeywordGroupController@create');
+    Route::post('/create', 'SEO\KeywordGroupController@store');
+
 });

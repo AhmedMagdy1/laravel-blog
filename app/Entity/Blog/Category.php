@@ -6,7 +6,7 @@ use App\Entity\Entity;
 
 class Category extends Entity
 {
-    private $name, $slug, $parent_id;
+    protected $name, $slug, $parent_id;
 
     public function __construct($category = '')
     {
