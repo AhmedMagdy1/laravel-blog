@@ -19,6 +19,8 @@ class CreateKeywordsTable extends Migration
             $table->double('search_volume');
             $table->double('kgr');
             $table->double('all_in_title');
+            $table->bigInteger('keyword_group_id')->unsigned();
+            $table->foreign('keyword_group_id')->references('id')->on('keyword_groups');
             $table->timestamps();
         });
     }

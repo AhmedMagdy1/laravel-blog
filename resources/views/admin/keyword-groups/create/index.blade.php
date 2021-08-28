@@ -10,34 +10,51 @@
         </div>
         <!-- End Page Header -->
         {{--    Page Content    --}}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-small mb-3">
-                    <div class="card-body">
-                        <div class="row p-3">
-                            <table class="table keyword-group">
-                                <tr>
-                                    <th>keyword</th>
-                                    <th>Search Volume</th>
-                                    <th>KGR</th>
-                                    <th>Allintitle</th>
-                                    <th>Action</th>
-                                </tr>
-                                <tr>
-                                    <td><input name="group[keyword][0]" type="text" class="form-control"></td>
-                                    <td><input name="group[search_volume][0]" class="search_volume-0 form-control" type="text"></td>
-                                    <td><input name="group[kgr][0]" class="kgr-0 form-control" type="text"></td>
-                                    <td><input name="group[all_in_title][0]" class="all_in_title-0 form-control" type="text"></td>
-                                    <td><a class="btn btn-primary add-new" href="javascript:;"><i class="fas fa-plus"></i></a></td>
-                                </tr>
-                            </table>
-                            <button class="btn btn-sm btn-success ml-auto">
-                                <i class="material-icons">save</i> Save
-                            </button>
-
+        <div class="card card-small mb-3">
+            <div class="card-body">
+                <form action="/admin/keyword-group/create" method="post">
+                    @csrf
+                    <div class="row p-3">
+                        <div class="col-sm-6">
+                            <input name="main_keyword" class="form-control" type="text" placeholder="Main Keyword">
+                        </div>
+                        <div class="col-sm-6">
+                            <select id="assigned_to" name="assigned_to" class="form-control">
+                                <option selected value="">Choose Author</option>
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-                </div>
+                    <div class="row p-3">
+                        <table class="table keyword-group">
+                            <tr>
+                                <th>keyword</th>
+                                <th>Search Volume</th>
+                                <th>KGR</th>
+                                <th>Allintitle</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td><input name="keywords[0][keyword]" type="text" class="form-control"></td>
+                                <td><input name="keywords[0][search_volume]" class="search_volume-0 form-control"
+                                           type="text">
+                                </td>
+                                <td><input name="keywords[0][kgr]" class="kgr-0 form-control" type="text"></td>
+                                <td><input name="keywords[0][all_in_title]" class="all_in_title-0 form-control"
+                                           type="text">
+                                </td>
+                                <td><a class="btn btn-primary add-new" href="javascript:;"><i
+                                            class="fas fa-plus"></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button class="btn btn-sm btn-success ml-auto">
+                        <i class="material-icons">save</i> Save
+                    </button>
+                </form>
             </div>
         </div>
         {{--    Page Content    --}}
@@ -51,12 +68,13 @@
 @section('script')
     <script>
         let index = 1;
+
         function addNewLine(lineNumber) {
             $('.keyword-group').append(`<tr>
-                                    <td><input name="group[keyword][${lineNumber}]" type="text" class="form-control"></td>
-                                    <td><input name="group[search_volume][${lineNumber}]" class="search_volume-${lineNumber} form-control" type="text"></td>
-                                    <td><input name="group[kgr][${lineNumber}]" class="kgr-${lineNumber} form-control" type="text"></td>
-                                    <td><input name="group[all_in_title][${lineNumber}]" class="all_in_title-${lineNumber} form-control" type="text"></td>
+                                    <td><input name="keywords[${lineNumber}][keyword]" type="text" class="form-control"></td>
+                                    <td><input name="keywords[${lineNumber}][search_volume]" class="search_volume-${lineNumber} form-control" type="text"></td>
+                                    <td><input name="keywords[${lineNumber}][kgr]" class="kgr-${lineNumber} form-control" type="text"></td>
+                                    <td><input name="keywords[${lineNumber}][all_in_title]" class="all_in_title-${lineNumber} form-control" type="text"></td>
                                     <td>
                                           <a class="btn btn-primary add-new" href="javascript:;"><i class="fas fa-plus"></i></a>
                                           <a class="btn btn-danger remove-line" href="javascript:;"><i class="fas fa-trash"></i></a>
@@ -64,6 +82,7 @@
                                 </tr>`);
             index++;
         }
+
         $(document).on('click', '.add-new', function (event) {
             event.preventDefault();
             addNewLine(index);

@@ -3,81 +3,64 @@
 namespace App\Http\Controllers\SEO;
 
 use App\Http\Controllers\Controller;
+use App\Service\Auth\UserService;
+use App\Service\SEO\KeywordGroupService;
+use App\Service\SEO\KeywordService;
 use Illuminate\Http\Request;
 
 class KeywordGroupController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $keywordGroupService, $keywordService;
+    public function __construct( KeywordGroupService $keywordGroupService, KeywordService $keywordService)
+    {
+        $this->keywordGroupService = $keywordGroupService;
+        $this->keywordService = $keywordService;
+    }
+
     public function index()
     {
-        //
+        return view('admin.keyword-groups.list.index', compact('categories'));
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $userService = new UserService;
+        $users = $userService->getAll();
+        return view('admin.keyword-groups.create.index', compact('users'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $keywordGroup = $this->keywordGroupService->create($request->all() + ['created_by' => auth()->user()->id]);
+        $keywordLines = $this->formatKeywordLines($request->keywords, $keywordGroup->id);
+        $this->keywordService->create($keywordLines);
+        return redirect('/admin/keyword-group');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    private function formatKeywordLines($keywords, $keywordGroupId)
+    {
+        foreach ($keywords as $key => $keyword)
+        {
+            $keywords[$key]['keyword_group_id'] = $keywordGroupId;
+        }
+        return $keywords;
+    }
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

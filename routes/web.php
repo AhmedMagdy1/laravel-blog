@@ -39,5 +39,6 @@ Route::prefix('admin/category')->group(function (){
 Route::prefix('/admin/keyword-group')->group(function (){
     Route::get('/create', 'SEO\KeywordGroupController@create');
     Route::post('/create', 'SEO\KeywordGroupController@store');
+    Route::get('/', 'SEO\KeywordGroupController@index');
 
 });
