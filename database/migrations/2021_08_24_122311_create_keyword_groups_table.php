@@ -20,6 +20,7 @@ class CreateKeywordGroupsTable extends Migration
             $table->foreign('assigned_to')->references('id')->on('users');
             $table->bigInteger('created_by')->unsigned();
             $table->foreign('created_by')->references('id')->on('users');
+            $table->longText('notes')->nullable();
             $table->timestamps();
         });
     }

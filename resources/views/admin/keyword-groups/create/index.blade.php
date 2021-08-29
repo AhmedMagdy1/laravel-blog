@@ -33,7 +33,7 @@
                                 <th>keyword</th>
                                 <th>Search Volume</th>
                                 <th>KGR</th>
-                                <th>Allintitle</th>
+                                <th>All in title</th>
                                 <th>Action</th>
                             </tr>
                             <tr>
@@ -51,6 +51,14 @@
                             </tr>
                         </table>
                     </div>
+                    <hr>
+                    <div class="row p-2">
+                        <div class="col-sm-12">
+                            <textarea name="notes" id="notes" class="form-control" cols="30" rows="10"
+                                      placeholder="Notes"></textarea>
+                        </div>
+                    </div>
+                    <hr>
                     <button class="btn btn-sm btn-success ml-auto">
                         <i class="material-icons">save</i> Save
                     </button>

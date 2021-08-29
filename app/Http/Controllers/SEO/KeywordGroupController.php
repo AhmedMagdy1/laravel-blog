@@ -32,20 +32,23 @@ class KeywordGroupController extends Controller
 
     public function store(Request $request)
     {
-        $keywordGroup = $this->keywordGroupService->create($request->all() + ['created_by' => auth()->user()->id]);
-        $keywordLines = $this->formatKeywordLines($request->keywords, $keywordGroup->id);
-        $this->keywordService->create($keywordLines);
+        $keywordGroupObject = $this->keywordGroupService->buildObject($request);
+        $keywordGroup = $this->keywordGroupService->create($keywordGroupObject);
+        $keywordGroupObject = $this->buildKeywordsObject($request, $keywordGroup, $keywordGroupObject);
+        $this->keywordService->create($keywordGroupObject);
         return redirect('/admin/keyword-group');
     }
 
-    private function formatKeywordLines($keywords, $keywordGroupId)
+    private function formatKeywordLines($keywords, $keywordGroupId, $keywordGroupObject)
     {
         foreach ($keywords as $key => $keyword)
         {
             $keywords[$key]['keyword_group_id'] = $keywordGroupId;
+            $keywords[$key]['created_at'] = date('Y-m-d H:i:s');
         }
         return $keywords;
     }
+
     public function show($id)
     {
         //
@@ -64,5 +67,11 @@ class KeywordGroupController extends Controller
     public function destroy($id)
     {
         //
+    }
+    private function buildKeywordsObject(Request $request, $keywordGroup, $keywordGroupObject)
+    {
+        $keywordLines = $this->formatKeywordLines($request->keywords, $keywordGroup->id, $keywordGroupObject);
+        $keywordGroupObject->addKeywordsLines($keywordLines);
+        return $keywordGroupObject;
     }
 }

@@ -8,7 +8,6 @@ class KeywordService
 {
     function create($keywords)
     {
-        return Keyword::insert($keywords);
-
+        return Keyword::insert($keywords->getKeywords());
     }
 }

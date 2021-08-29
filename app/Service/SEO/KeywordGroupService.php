@@ -8,13 +8,17 @@ use App\Models\SEO\KeywordGroup as KeywordGroupModel;
 
 class KeywordGroupService
 {
+    function buildObject($data)
+    {
+        $createdBy = auth()->user()->id;
+        return new KeywordGroupEntity($data['main_keyword'], $createdBy, $data['assigned_to'], $data['notes']);
+    }
     function create($data)
     {
-        $group = new KeywordGroupEntity($data['main_keyword'], $data['created_by'], $data['assigned_to']);
-        return $this->store($group);
+        return $this->store($data);
     }
 
-    function store(KeywordGroupEntity $group)
+    private function store(KeywordGroupEntity $group)
     {
         return KeywordGroupModel::create($group->toArray(['id']));
     }
