@@ -61,5 +61,8 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="/admin-assets/scripts/app/app-blog-new-post.1.1.0.js"></script>
 @yield('script')
+<script>
+    $(`a[href='${window.location.pathname}']`).addClass('active');
+</script>
 </body>
 </html>
