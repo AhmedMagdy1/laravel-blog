@@ -4,8 +4,8 @@
         <!-- Page Header -->
         <div class="page-header row no-gutters py-4">
             <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                <span class="text-uppercase page-subtitle">Categories</span>
-                <h3 class="page-title">List Category </h3>
+                <span class="text-uppercase page-subtitle">Keywords Group</span>
+                <h3 class="page-title">List Keywords Group </h3>
             </div>
             <div class="col-sm-8">
 
@@ -17,7 +17,7 @@
             <div class="col">
                 <div class="card card-small mb-4">
                     <div class="p-3" style="text-align: right;">
-                        <a href="/admin/category/create" class="btn btn-success"> <i class="fas fa-plus"></i>  Add Category</a>
+                        <a href="/admin/keyword-group/create" class="btn btn-success"> <i class="fas fa-plus"></i>  Add Keywords Group</a>
                     </div>
 
                     <div class="card-body p-0 pb-3 text-center">
@@ -25,16 +25,28 @@
                             <thead class="bg-light">
                             <tr>
                                 <th scope="col" class="border-0">#</th>
-                                <th scope="col" class="border-0">Name</th>
-                                <th scope="col" class="border-0">Slug</th>
-                                <th scope="col" class="border-0">Slug</th>
+                                <th scope="col" class="border-0">Main Keyword</th>
+                                <th scope="col" class="border-0">Assigned To</th>
+                                <th scope="col" class="border-0">Created By</th>
+                                <th scope="col" class="border-0">No of keywords</th>
                                 <th scope="col" class="border-0">Action</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($keywordGroups as $keywordGroup)
+                                <tr>
+                                    <td>{{$keywordGroup->id}}</td>
+                                    <td>{{$keywordGroup->main_keyword}}</td>
+                                    <td>{{isset($keywordGroup->author->name) ? $keywordGroup->author->name : ''}}</td>
+                                    <td>{{$keywordGroup->user->name}}</td>
+                                    <td>{{$keywordGroup->keywords->count()}}</td>
+                                    <td><a href="/admin/keyword-group/{{$keywordGroup->id}}/edit"><i class="fas fa-edit"></i></a></td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                         <div class="col-md-12">
+                            {{$keywordGroups->withQueryString()->links()}}
                         </div>
                     </div>
                 </div>

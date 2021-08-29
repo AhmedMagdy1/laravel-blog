@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SEO;
 
+use App\Entity\SEO\KeywordGroup;
 use App\Http\Controllers\Controller;
 use App\Service\Auth\UserService;
 use App\Service\SEO\KeywordGroupService;
@@ -19,7 +20,8 @@ class KeywordGroupController extends Controller
 
     public function index()
     {
-        return view('admin.keyword-groups.list.index', compact('categories'));
+        $keywordGroups = $this->keywordGroupService->getPaginated();
+        return view('admin.keyword-groups.list.index', compact('keywordGroups'));
 
     }
 
@@ -27,7 +29,8 @@ class KeywordGroupController extends Controller
     {
         $userService = new UserService;
         $users = $userService->getAll();
-        return view('admin.keyword-groups.create.index', compact('users'));
+        $keywordGroupObject = new KeywordGroup;
+        return view('admin.keyword-groups.create.index', compact('users', 'keywordGroupObject'));
     }
 
     public function store(Request $request)
@@ -35,11 +38,18 @@ class KeywordGroupController extends Controller
         $keywordGroupObject = $this->keywordGroupService->buildObject($request);
         $keywordGroup = $this->keywordGroupService->create($keywordGroupObject);
         $keywordGroupObject = $this->buildKeywordsObject($request, $keywordGroup, $keywordGroupObject);
-        $this->keywordService->create($keywordGroupObject);
+        $this->keywordService->create($keywordGroupObject->getKeywords());
         return redirect('/admin/keyword-group');
     }
 
-    private function formatKeywordLines($keywords, $keywordGroupId, $keywordGroupObject)
+    private function buildKeywordsObject(Request $request, $keywordGroup, $keywordGroupObject)
+    {
+        $keywordLines = $this->formatKeywordLines($request->keywords, $keywordGroup->id);
+        $keywordGroupObject->addKeywordsLines($keywordLines);
+        return $keywordGroupObject;
+    }
+
+    private function formatKeywordLines($keywords, $keywordGroupId)
     {
         foreach ($keywords as $key => $keyword)
         {
@@ -56,22 +66,26 @@ class KeywordGroupController extends Controller
 
     public function edit($id)
     {
-        //
+        $userService = new UserService;
+        $users = $userService->getAll();
+        $keywordGroupData = $this->keywordGroupService->getWithKeywordsLines($id);
+        $keywordGroupObject = $this->keywordGroupService->buildObject($keywordGroupData);
+        $keywordGroupObject->addKeywordsLines($keywordGroupData['keywords']);
+        return view('admin.keyword-groups.create.index', compact('users', 'keywordGroupObject'));
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $keywordGroupObject = $this->keywordGroupService->buildObject($request->all() + ['id' =>$id]);
+        $keywordGroupObject->addKeywordsLines($request['keywords']);
+        $this->keywordGroupService->update($keywordGroupObject, $id);
+        $this->keywordService->removeAll($id);
+        $this->keywordService->create($keywordGroupObject->getKeywords());
+        return redirect('/admin/keyword-group');
     }
 
     public function destroy($id)
     {
         //
-    }
-    private function buildKeywordsObject(Request $request, $keywordGroup, $keywordGroupObject)
-    {
-        $keywordLines = $this->formatKeywordLines($request->keywords, $keywordGroup->id, $keywordGroupObject);
-        $keywordGroupObject->addKeywordsLines($keywordLines);
-        return $keywordGroupObject;
     }
 }

@@ -8,7 +8,7 @@ class KeywordGroup extends Entity
 {
     protected $main_keyword, $created_by, $assigned_to, $notes;
     protected $keywords = [];
-    public function __construct($mainKeyword, $createdBy, $assignedTo, $notes, $id = null)
+    public function __construct($mainKeyword = '', $createdBy = null, $assignedTo = null, $notes = '', $id = null)
     {
         $this->id = $id;
         $this->main_keyword = $mainKeyword;
@@ -16,19 +16,12 @@ class KeywordGroup extends Entity
         $this->assigned_to = $assignedTo;
         $this->notes = $notes;
     }
-
-    public function addKeywords($keywordLine)
-    {
-        array_push($this->keywords, $keywordLine);
-        return $this;
-    }
-
     public function addKeywordsLines($lines)
     {
         foreach ($lines as $line){
+            if ($this->id != null) $line['keyword_group_id'] = $this->id;
             array_push($this->keywords, $line);
         }
-        return $this;
     }
 
     public function getKeywords()

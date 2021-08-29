@@ -6,15 +6,16 @@ use App\Entity\Entity;
 
 class Keyword extends Entity
 {
-    protected $keyword, $search_volume, $kgr, $all_in_title;
+    protected $keyword, $search_volume, $kgr, $all_in_title, $keyword_group_id;
 
-    public function __construct($keyword, $searchVolume, $kgr, $allInTitle, $id = null)
+    public function __construct($keyword, $searchVolume, $kgr, $allInTitle, $keywordGroupId, $id = null)
     {
         $this->id = $id;
         $this->keyword = $keyword;
         $this->search_volume = $searchVolume;
         $this->kgr = $kgr;
         $this->all_in_title = $allInTitle;
+        $this->keyword_group_id = $keywordGroupId;
     }
 
     public function getKeyword()

@@ -8,6 +8,10 @@ class KeywordService
 {
     function create($keywords)
     {
-        return Keyword::insert($keywords->getKeywords());
+        return Keyword::insert($keywords);
+    }
+    function removeAll($keywordGroupId)
+    {
+        return Keyword::where('keyword_group_id', $keywordGroupId)->delete();
     }
 }

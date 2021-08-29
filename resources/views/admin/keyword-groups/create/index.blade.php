@@ -12,17 +12,21 @@
         {{--    Page Content    --}}
         <div class="card card-small mb-3">
             <div class="card-body">
-                <form action="/admin/keyword-group/create" method="post">
-                    @csrf
+                    @if($keywordGroupObject->getId())
+                        {!! Form::open(['url' => '/admin/keyword-group/'. $keywordGroupObject->getId(), 'method'=> 'put']) !!}
+                    @else
+                        {!! Form::open(['url' => '/admin/keyword-group/create', 'method'=> 'post']) !!}
+                    @endif
+                            @csrf
                     <div class="row p-3">
                         <div class="col-sm-6">
-                            <input name="main_keyword" class="form-control" type="text" placeholder="Main Keyword">
+                            <input name="main_keyword" class="form-control" type="text" placeholder="Main Keyword" value="{{$keywordGroupObject->getMainKeyword()}}">
                         </div>
                         <div class="col-sm-6">
                             <select id="assigned_to" name="assigned_to" class="form-control">
                                 <option selected value="">Choose Author</option>
                                 @foreach($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                    <option value="{{$user->id}}" @if($keywordGroupObject->getAssignedTo()) selected @endif>{{$user->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -36,33 +40,52 @@
                                 <th>All in title</th>
                                 <th>Action</th>
                             </tr>
-                            <tr>
-                                <td><input name="keywords[0][keyword]" type="text" class="form-control"></td>
-                                <td><input name="keywords[0][search_volume]" class="search_volume-0 form-control"
-                                           type="text">
-                                </td>
-                                <td><input name="keywords[0][kgr]" class="kgr-0 form-control" type="text"></td>
-                                <td><input name="keywords[0][all_in_title]" class="all_in_title-0 form-control"
-                                           type="text">
-                                </td>
-                                <td><a class="btn btn-primary add-new" href="javascript:;"><i
-                                            class="fas fa-plus"></i></a>
-                                </td>
-                            </tr>
+                            @if($keywordGroupObject->getId() == null)
+                                <tr>
+                                    <td><input name="keywords[0][keyword]" type="text" class="form-control"></td>
+                                    <td><input name="keywords[0][search_volume]" class="search_volume-0 form-control"
+                                               type="text">
+                                    </td>
+                                    <td><input name="keywords[0][kgr]" class="kgr-0 form-control" type="text"></td>
+                                    <td><input name="keywords[0][all_in_title]" class="all_in_title-0 form-control"
+                                               type="text">
+                                    </td>
+                                    <td><a class="btn btn-primary add-new" href="javascript:;"><i
+                                                class="fas fa-plus"></i></a>
+                                    </td>
+                                </tr>
+                            @endif
+                            @foreach($keywordGroupObject->getKeywords() as $key => $keyword)
+                                <tr>
+                                    <td><input name="keywords[{{$key}}][keyword]" value="{{$keyword['keyword']}}" type="text" class="form-control"></td>
+                                    <td><input name="keywords[{{$key}}][search_volume]" value="{{$keyword['search_volume']}}" class="search_volume-{{$key}} form-control"
+                                               type="text">
+                                    </td>
+                                    <td><input name="keywords[{{$key}}][kgr]"  value="{{$keyword['kgr']}}" class="kgr-{{$key}} form-control" type="text"></td>
+                                    <td><input name="keywords[{{$key}}][all_in_title]"  value="{{$keyword['all_in_title']}}" class="all_in_title-{{$key}} form-control"
+                                               type="text">
+                                    </td>
+                                    <td><a class="btn btn-primary add-new" href="javascript:;"><i
+                                                class="fas fa-plus"></i></a>
+                                        @if($key > 0)
+                                            <a class="btn btn-danger remove-line" href="javascript:;"><i class="fas fa-trash"></i></a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                         </table>
                     </div>
                     <hr>
                     <div class="row p-2">
                         <div class="col-sm-12">
-                            <textarea name="notes" id="notes" class="form-control" cols="30" rows="10"
-                                      placeholder="Notes"></textarea>
+                            <textarea name="notes" id="notes" class="form-control" cols="30" rows="10" placeholder="Notes">{{$keywordGroupObject->getNotes()}}</textarea>
                         </div>
                     </div>
                     <hr>
                     <button class="btn btn-sm btn-success ml-auto">
                         <i class="material-icons">save</i> Save
                     </button>
-                </form>
+                {!! Form::close() !!}
             </div>
         </div>
         {{--    Page Content    --}}
@@ -75,8 +98,7 @@
 @endsection
 @section('script')
     <script>
-        let index = 1;
-
+        let index = "{{count($keywordGroupObject->getKeywords()) > 0 ? count($keywordGroupObject->getKeywords()) : count($keywordGroupObject->getKeywords())+1}}";
         function addNewLine(lineNumber) {
             $('.keyword-group').append(`<tr>
                                     <td><input name="keywords[${lineNumber}][keyword]" type="text" class="form-control"></td>
