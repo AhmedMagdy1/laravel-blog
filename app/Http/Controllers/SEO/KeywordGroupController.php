@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SEO;
 
 use App\Entity\SEO\KeywordGroup;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SEO\CreateKeywordGroup;
 use App\Service\Auth\UserService;
 use App\Service\SEO\KeywordGroupService;
 use App\Service\SEO\KeywordService;
@@ -33,7 +34,7 @@ class KeywordGroupController extends Controller
         return view('admin.keyword-groups.create.index', compact('users', 'keywordGroupObject'));
     }
 
-    public function store(Request $request)
+    public function store(CreateKeywordGroup $request)
     {
         $keywordGroupObject = $this->keywordGroupService->buildObject($request);
         $keywordGroup = $this->keywordGroupService->create($keywordGroupObject);
@@ -74,7 +75,7 @@ class KeywordGroupController extends Controller
         return view('admin.keyword-groups.create.index', compact('users', 'keywordGroupObject'));
     }
 
-    public function update(Request $request, $id)
+    public function update(CreateKeywordGroup $request, $id)
     {
         $keywordGroupObject = $this->keywordGroupService->buildObject($request->all() + ['id' =>$id]);
         $keywordGroupObject->addKeywordsLines($request['keywords']);

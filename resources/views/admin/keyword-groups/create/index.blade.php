@@ -22,6 +22,9 @@
                     <div class="row p-3">
                         <div class="col-sm-6">
                             <input name="main_keyword" class="form-control" type="text" placeholder="Main Keyword" value="{{$keywordGroupObject->getMainKeyword()}}">
+                            @if($errors->has('main_keyword'))
+                                <label class="help-block">This field is required</label>
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <select id="assigned_to" name="assigned_to" class="form-control">
@@ -78,6 +81,10 @@
                                 </tr>
                             @endforeach
                         </table>
+                        @if($errors->has('main_keyword'))
+                            <label class="help-block">Please Fill the required data in the table</label>
+                        @endif
+
                     </div>
                     <hr>
                     <div class="row p-2">

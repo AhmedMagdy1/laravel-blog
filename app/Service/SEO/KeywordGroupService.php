@@ -32,7 +32,7 @@ class KeywordGroupService
 
     public function getWithKeywordsLines($id)
     {
-        return KeywordGroupModel::with('keywords')->find($id)->toArray();
+        return KeywordGroupModel::with('keywords')->findOrFail($id)->toArray();
     }
     public function update($group ,$id)
     {
