@@ -8,11 +8,11 @@ use App\Http\Requests\SEO\CreateKeywordGroup;
 use App\Service\Auth\UserService;
 use App\Service\SEO\KeywordGroupService;
 use App\Service\SEO\KeywordService;
-use Illuminate\Http\Request;
 
 class KeywordGroupController extends Controller
 {
     private $keywordGroupService, $keywordService;
+
     public function __construct( KeywordGroupService $keywordGroupService, KeywordService $keywordService)
     {
         $this->keywordGroupService = $keywordGroupService;
@@ -36,33 +36,8 @@ class KeywordGroupController extends Controller
 
     public function store(CreateKeywordGroup $request)
     {
-        $keywordGroupObject = $this->keywordGroupService->buildObject($request);
-        $keywordGroup = $this->keywordGroupService->create($keywordGroupObject);
-        $keywordGroupObject = $this->buildKeywordsObject($request, $keywordGroup, $keywordGroupObject);
-        $this->keywordService->create($keywordGroupObject->getKeywords());
+        $this->keywordGroupService->create($request);
         return redirect('/admin/keyword-group');
-    }
-
-    private function buildKeywordsObject(Request $request, $keywordGroup, $keywordGroupObject)
-    {
-        $keywordLines = $this->formatKeywordLines($request->keywords, $keywordGroup->id);
-        $keywordGroupObject->addKeywordsLines($keywordLines);
-        return $keywordGroupObject;
-    }
-
-    private function formatKeywordLines($keywords, $keywordGroupId)
-    {
-        foreach ($keywords as $key => $keyword)
-        {
-            $keywords[$key]['keyword_group_id'] = $keywordGroupId;
-            $keywords[$key]['created_at'] = date('Y-m-d H:i:s');
-        }
-        return $keywords;
-    }
-
-    public function show($id)
-    {
-        //
     }
 
     public function edit($id)
@@ -77,16 +52,7 @@ class KeywordGroupController extends Controller
 
     public function update(CreateKeywordGroup $request, $id)
     {
-        $keywordGroupObject = $this->keywordGroupService->buildObject($request->all() + ['id' =>$id]);
-        $keywordGroupObject->addKeywordsLines($request['keywords']);
-        $this->keywordGroupService->update($keywordGroupObject, $id);
-        $this->keywordService->removeAll($id);
-        $this->keywordService->create($keywordGroupObject->getKeywords());
+        $this->keywordGroupService->edit($request->all(), $id);
         return redirect('/admin/keyword-group');
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }
