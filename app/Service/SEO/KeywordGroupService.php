@@ -54,4 +54,9 @@ class KeywordGroupService
         return KeywordGroupModel::find($id)->update($group->toArray(['id', 'keywords']));
     }
 
+    public function getAll()
+    {
+        return KeywordGroupModel::all();
+    }
+
 }

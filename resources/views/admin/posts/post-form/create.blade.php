@@ -16,13 +16,13 @@
                 <div class="card-body">
                     <form class="add-new-post">
                         <input class="form-control form-control-lg mb-3" type="text"
-                               placeholder="Your Post Title">
+                               name="title" placeholder="Your Post Title">
                         <input class="form-control form-control-lg mb-3" type="text"
-                               placeholder="Your Post Slug">
+                               name="slug" placeholder="Your Post Slug">
                         <input class="form-control form-control-lg mb-3" type="text"
-                               placeholder="Your Post Subtitle">
+                               name="subtitle" placeholder="Your Post Subtitle">
                         <hr>
-                        <textarea id="mytextarea"></textarea>
+                        <textarea name="content_html" id="mytextarea"></textarea>
                         <br>
                         <div class="container">
                             <div class="accordion indicator-plus-before round-indicator" id="accordionH"
@@ -39,9 +39,9 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="form-group col-md-6">
-                                                    <label>Title(Slug):</label>
-                                                    <input type="text" name="slug" class="form-control"
-                                                           placeholder="Title(Slug)" required="">
+                                                    <label>Title:</label>
+                                                    <input type="text" name="seo_title" class="form-control"
+                                                           placeholder="Title" required="">
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label>Keyphrase:</label>
@@ -97,17 +97,25 @@
                 <div class='card-body p-0'>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item p-3">
-                                        <span class="d-flex mb-2">
-                                          <i class="material-icons mr-1">flag</i>
-                                          <strong class="mr-1">Status:</strong> Draft
-                                          <a class="ml-auto" href="#">Edit</a>
-                                        </span>
-
-                            <span class="d-flex mb-2">
-                                          <i class="material-icons mr-1">calendar_today</i>
-                                          <strong class="mr-1">Schedule:</strong> Now
-                                          <a class="ml-auto" href="#">Edit</a>
-                                        </span>
+                            <div class="form-group">
+                                <!-- todo it will be accept tags -->
+                                <i class="material-icons mr-1">flag</i>
+                                <strong class="mr-1">Status:</strong>
+                                <select id="status" name="status_id" class="form-control">
+                                    <option selected>Choose Status</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
+                            <span class="mb-2">
+                                  <i class="material-icons mr-1">calendar_today</i>
+                                  <strong class="mr-1">Schedule:</strong>
+                                  <div class="input-group date" id="datetimepicker9" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker9"/>
+                                        <div class="input-group-append" data-target="#datetimepicker9" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                  </div>
+                            </span>
                             <div class="form-group">
                                 <!-- todo it will be accept tags -->
                                 <label>Category:</label>
@@ -133,8 +141,17 @@
                     </ul>
                 </div>
             </div>
-            <!-- / Post Overview -->
-            <!-- Post Overview -->
+            <div class='card card-small mb-3'>
+                <div class="card-header border-bottom">
+                    <h6 class="m-0">Post Image</h6>
+                </div>
+                <div class='card-body p-1'>
+                    <div class="form-group col-md-12">
+                        <label>Image:</label>
+                        <input name="image" type="file">
+                    </div>
+                </div>
+            </div>
             <div class='card card-small mb-3'>
                 <div class="card-header border-bottom">
                     <h6 class="m-0">Internal links</h6>
@@ -173,7 +190,7 @@
                 <div class='card-body p-1'>
                     <div class="form-group col-md-12">
                         <div class="custom-control custom-checkbox mb-1">
-                            <input type="checkbox" class="custom-control-input" id="formsCheckboxDefault">
+                            <input type="checkbox" class="custom-control-input" name="is_active_table_content" id="formsCheckboxDefault">
                             <label class="custom-control-label" for="formsCheckboxDefault">Active</label>
                         </div>
                     </div>
@@ -184,6 +201,7 @@
 </div>
 @endsection
 @section('style')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <style>
         /* accordion styles */
         .accordion .card-header {
@@ -239,4 +257,22 @@
             border: 0;
         }
     </style>
+@endsection
+@section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker9').datetimepicker({
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                }
+            });
+        });
+
+    </script>
 @endsection
