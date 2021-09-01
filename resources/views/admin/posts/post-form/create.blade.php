@@ -15,14 +15,11 @@
             <div class="card card-small mb-3">
                 <div class="card-body">
                     <form class="add-new-post">
-                        <input class="form-control form-control-lg mb-3" type="text"
-                               name="title" placeholder="Your Post Title">
-                        <input class="form-control form-control-lg mb-3" type="text"
-                               name="slug" placeholder="Your Post Slug">
-                        <input class="form-control form-control-lg mb-3" type="text"
-                               name="subtitle" placeholder="Your Post Subtitle">
+                        {!! Form::text('name', '', ['class' => 'form-control form-control-lg mb-3', 'placeholder' => 'Your Post Title']) !!}
+                        {!! Form::text('slug', '', ['class' => 'form-control form-control-lg mb-3', 'placeholder' => 'Your Post Slug']) !!}
+                        {!! Form::text('subtitle', '', ['class' => 'form-control form-control-lg mb-3', 'placeholder' => 'Your Post Subtitle']) !!}
                         <hr>
-                        <textarea name="content_html" id="mytextarea"></textarea>
+                        {!! Form::textarea('content_html',null , ['id' => 'mytextarea']) !!}
                         <br>
                         <div class="container">
                             <div class="accordion indicator-plus-before round-indicator" id="accordionH"
@@ -40,21 +37,17 @@
                                             <div class="row">
                                                 <div class="form-group col-md-6">
                                                     <label>Title:</label>
-                                                    <input type="text" name="seo_title" class="form-control"
-                                                           placeholder="Title" required="">
+                                                    {!! Form::text('seo_title', '', ['class' => 'form-control', 'placeholder' => 'Post Title']) !!}
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label>Keyphrase:</label>
-                                                    <input type="text" name="keyphrase" class="form-control"
-                                                           placeholder="Keyphrase" required="">
+                                                    {!! Form::text('keyphrase', '', ['class' => 'form-control', 'placeholder' => 'Post keyphrase']) !!}
                                                 </div>
                                             </div>
                                             <div class="row col-sm-12">
                                                 <label for="exampleFormControlTextarea1">Meta
                                                     Description</label>
-                                                <textarea class="form-control"
-                                                          id="exampleFormControlTextarea1" rows="3"
-                                                          name="meta_description"></textarea>
+                                                {!! Form::textarea('meta_description',null , ['class' => 'form-control']) !!}
                                             </div>
                                             <hr>
                                             <div class="row col-sm-12" dir="ltr">
@@ -101,16 +94,14 @@
                                 <!-- todo it will be accept tags -->
                                 <i class="material-icons mr-1">flag</i>
                                 <strong class="mr-1">Status:</strong>
-                                <select id="status" name="status_id" class="form-control">
-                                    <option selected>Choose Status</option>
-                                    <option>...</option>
-                                </select>
+                                {!! Form::select('status_id', [null => 'Choose Status'] , null, ['class' => 'form-control', 'id' => 'status']); !!}
+
                             </div>
                             <span class="mb-2">
                                   <i class="material-icons mr-1">calendar_today</i>
                                   <strong class="mr-1">Schedule:</strong>
                                   <div class="input-group date" id="datetimepicker9" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker9"/>
+                                        {!! Form::text('published_at', null, ['class' => 'form-control datetimepicker-input', 'data-target' => '#datetimepicker9']) !!}
                                         <div class="input-group-append" data-target="#datetimepicker9" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
@@ -119,18 +110,14 @@
                             <div class="form-group">
                                 <!-- todo it will be accept tags -->
                                 <label>Category:</label>
-                                <select id="category" class="form-control">
-                                    <option selected>Choose Category</option>
-                                    <option>...</option>
-                                </select>
+                                {!! Form::select('category_id', [null => 'Choose Category'] , null, ['class' => 'form-control', 'id' => 'category']); !!}
+
                             </div>
                             <div class="form-group">
                                 <!-- todo it will be accept tags -->
                                 <label>Tags:</label>
-                                <select id="tags" class="form-control">
-                                    <option selected>Choose Tags</option>
-                                    <option>...</option>
-                                </select>
+                                {!! Form::select('tags', [null => 'Choose Tags'] , null, ['class' => 'form-control', 'id' => 'tags', 'multiple' => true]); !!}
+
                             </div>
                         </li>
                         <li class="list-group-item d-flex px-3">
@@ -148,7 +135,7 @@
                 <div class='card-body p-1'>
                     <div class="form-group col-md-12">
                         <label>Image:</label>
-                        <input name="image" type="file">
+                        {!! Form::file('image'); !!}
                     </div>
                 </div>
             </div>
@@ -160,10 +147,8 @@
                     <div class="form-group col-md-12">
                         <!-- todo it will be accept tags -->
                         <label>Keywords:</label>
-                        <select id="keywords" class="form-control">
-                            <option selected>Choose Keywords</option>
-                            <option>...</option>
-                        </select>
+                        {!! Form::select('keywords', [null => 'Choose Keywords'] , null, ['class' => 'form-control', 'id' => 'keywords']); !!}
+
                     </div>
                 </div>
             </div>
@@ -176,10 +161,8 @@
                     <div class="form-group col-md-12">
                         <!-- todo it will be accept tags -->
                         <label>Group:</label>
-                        <select id="keyword-group" class="form-control">
-                            <option selected>Choose Group</option>
-                            <option>...</option>
-                        </select>
+                        {!! Form::select('keyword_group_id', [null => 'Choose Keywords Group'] , null, ['class' => 'form-control', 'id' => 'keyword-group']); !!}
+
                     </div>
                 </div>
             </div>
@@ -190,7 +173,8 @@
                 <div class='card-body p-1'>
                     <div class="form-group col-md-12">
                         <div class="custom-control custom-checkbox mb-1">
-                            <input type="checkbox" class="custom-control-input" name="is_active_table_content" id="formsCheckboxDefault">
+                            {{Form::checkbox('is_active_table_content', null, false, ['class' => 'custom-control-input', 'id' => 'formsCheckboxDefault' ])}}
+
                             <label class="custom-control-label" for="formsCheckboxDefault">Active</label>
                         </div>
                     </div>
@@ -270,8 +254,10 @@
                     date: "fa fa-calendar",
                     up: "fa fa-arrow-up",
                     down: "fa fa-arrow-down"
-                }
+                },
+                "defaultDate":new Date()
             });
+            $('#tags').select2();
         });
 
     </script>
