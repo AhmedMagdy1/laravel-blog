@@ -2,6 +2,7 @@
 
 namespace App\Service\Blog;
 
+use App\Http\Helpers\Lookups;
 use App\Models\Blog\Category;
 
 use App\Entity\Blog\Category as CategoryEntity;
@@ -15,15 +16,7 @@ class CategoryService
     function getLookups()
     {
         $categories = Category::all();
-        return $this->formatCategories($categories);
-    }
-    private function formatCategories($categories)
-    {
-        $result = [null => 'Please Select Category'];
-        foreach ($categories as $category) {
-            $result[$category->id] = $category->name;
-        }
-        return $result;
+        return Lookups::format($categories);
     }
     function get($id)
     {

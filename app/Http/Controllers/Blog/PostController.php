@@ -3,81 +3,60 @@
 namespace App\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
+use App\Service\Blog\CategoryService;
+use App\Service\Blog\PostService;
+use App\Service\Blog\StatusService;
+use App\Service\Blog\TagService;
+use App\Service\SEO\KeywordGroupService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $postService;
+    public function __construct(PostService $postService)
+    {
+        $this->postService = $postService;
+    }
+
     public function index()
     {
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $status  = new StatusService;
+        $statuses = $status->getLookups();
+        $category = new CategoryService;
+        $categories = $category->getLookups();
+        $tagService = new TagService;
+        $tags = $tagService->getLookups();
+        $keywords = new KeywordGroupService;
+        $keywordsGroups = $keywords->getLookups();
+        return view('admin.posts.post-form.create', compact('statuses', 'categories', 'tags', 'keywordsGroups'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $this->postService->create($request->all());
+//        return Redirect::back()->withMessage('Profile saved!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

@@ -4,6 +4,7 @@ namespace App\Service\SEO;
 
 
 use App\Entity\SEO\KeywordGroup as KeywordGroupEntity;
+use App\Http\Helpers\Lookups;
 use App\Models\SEO\KeywordGroup as KeywordGroupModel;
 use Illuminate\Http\Request;
 
@@ -57,6 +58,11 @@ class KeywordGroupService
     public function getAll()
     {
         return KeywordGroupModel::all();
+    }
+
+    public function getLookups()
+    {
+        return Lookups::format($this->getAll(), 'id', 'main_keyword');
     }
 
 }

@@ -7,9 +7,9 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#"
                role="button" aria-haspopup="true" aria-expanded="false">
-                <img class="user-avatar rounded-circle mr-2" src="/admin-assets/images/avatars/0.jpg"
+                <img class="user-avatar rounded-circle mr-2" src="/admin-assets/images/avatars/1.jpg"
                      alt="User Avatar">
-                <span class="d-none d-md-inline-block">Sierra Brooks</span>
+                <span class="d-none d-md-inline-block">{{ auth()->user()->name }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-small">
                 <a class="dropdown-item text-danger" href="#">

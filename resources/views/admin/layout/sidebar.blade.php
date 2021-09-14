@@ -38,7 +38,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin">
+                <a class="nav-link" href="/admin/post/create">
                     <i class="material-icons">note_add</i>
                     <span>Add New Post</span>
                 </a>

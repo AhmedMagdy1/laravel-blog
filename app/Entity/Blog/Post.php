@@ -1,13 +1,26 @@
 <?php
 
-namespace App\Entity\Post;
+namespace App\Entity\Blog;
 
 use App\Entity\Entity;
 
 class Post extends Entity
 {
+    //todo add default layout
     protected $title, $slug, $subtitle, $content_raw, $content_html, $image, $created_by, $is_draft, $published_at,
-            $category_id, $layout, $seo_title, $keyphrase, $meta_description, $is_active_table_content, $status_id;
+            $category_id, $layout = '', $seo_title, $keyphrase, $meta_description, $is_active_table_content, $status_id, $keyword_group_id, $tags;
+
+
+    public function getKeywordGroupId()
+    {
+        return $this->keyword_group_id;
+    }
+
+    public function setKeywordGroupId($keyword_group_id)
+    {
+        $this->keyword_group_id = $keyword_group_id;
+        return $this;
+    }
 
     public function getTitle()
     {
@@ -47,9 +60,9 @@ class Post extends Entity
         return $this->content_raw;
     }
 
-    public function setContentRaw($content_raw)
+    public function setContentRaw()
     {
-        $this->content_raw = $content_raw;
+        $this->content_raw = strip_tags($this->content_html);
         return $this;
     }
 
@@ -61,6 +74,7 @@ class Post extends Entity
     public function setContentHtml($content_html)
     {
         $this->content_html = $content_html;
+        $this->setContentRaw();
         return $this;
     }
 
@@ -91,9 +105,9 @@ class Post extends Entity
         return $this->is_draft;
     }
 
-    public function setIsDraft($is_draft)
+    public function setIsDraft()
     {
-        $this->is_draft = $is_draft;
+        $this->is_draft = $this->status_id == 1 ? true : false;
         return $this;
     }
 
@@ -104,7 +118,7 @@ class Post extends Entity
 
     public function setPublishedAt($published_at)
     {
-        $this->published_at = $published_at;
+        $this->published_at = date("Y-m-d h:i:s", strtotime($published_at));
         return $this;
     }
 
@@ -182,5 +196,19 @@ class Post extends Entity
     public function setStatusId($status_id)
     {
         $this->status_id = $status_id;
+        return $this;
+    }
+
+    public function setTags($tags)
+    {
+        $this->tags = [];
+        foreach ($tags as $key => $tag) {
+            array_push($this->tags, new Tag( isset($tag['id']) ? $tag['id'] : null, isset($tag['title']) ? $tag['title'] : null ) );
+        }
+        return $this;
+    }
+    public function getTags()
+    {
+        return $this->tags;
     }
 }
